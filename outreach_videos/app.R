@@ -1,6 +1,6 @@
 #Ocean Drilling Movie Database
 #started: 1 December 2021
-#updated: 10 April 2023
+#updated: 29 February 2024
 #Laurel Childress; childress@iodp.tamu.edu
 
 ###############################################################################
@@ -83,7 +83,7 @@ ui <- dashboardPage(
     br(),
     tags$i("Questions, comments, concerns, compliments: shinylaurelwebmaster@gmail.com"),
     br(),
-    tags$i("This app can be cited by DOI: 10.5281/zenodo.10498831"),
+    tags$i("This app can be cited by https://doi.org/10.5281/zenodo.10498831"),
     tags$head(tags$style(HTML('
         /* logo */
         .skin-blue .main-header .logo {
