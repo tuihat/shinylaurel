@@ -1,6 +1,6 @@
 #GCR Sample Planning Applications
 #started: 23 January 2021
-#updated: 14 January 2022
+#updated: 1 March 2024
 #Laurel Childress; childress@iodp.tamu.edu
 
 ###############################################################################
@@ -106,7 +106,7 @@ ui <- fluidPage(useShinyjs(), #to use shinyjs
                                     br(),
                                     tags$i("Questions, comments, concerns, compliments: shinylaurelwebmaster@gmail.com"),
                                     br(),
-                                    tags$i("This app can be cited by DOI: 10.5281/zenodo.10498831")), #italic disclaimer
+                                    tags$i("This app can be cited by https://doi.org/10.5281/zenodo.10498831")), #italic disclaimer
                            tabPanel("Repetitive Sample Intervals", #App 2
                                     tags$i("Please note that there are very few guardrails
                                           in this application. If changing values causes
@@ -309,6 +309,9 @@ server <- function(input, output, session) {
             tmp2 <- section_summary %>%
                 filter(Exp == df_obj$Exp, Site == df_obj$Site, Hole == df_obj$Hole,
                        Top.depth.CSF.A..m. <= df_obj$mbsf, df_obj$mbsf < Bottom.depth.CSF.A..m.)
+            validate(
+              need(nrow(tmp2) > 0, "An error has occurred. The most likely issue is that one or more of the mbsf values submitted is not a recovered depth. Please check your list and try again.")
+            )
             tmp2$requested_mbsf <- df_obj$mbsf
             app1_batchlist[[i]] <- tmp2}
         
@@ -317,8 +320,8 @@ server <- function(input, output, session) {
         
         batched$top_cm <- (as.numeric(batched$requested_mbsf) - as.numeric(batched$Top.depth.CSF.A..m.))*100
         batched$top_cm <- round(batched$top_cm, 2)
-        batched <- batched[,c(1:6, 21, 20)]
-        names(batched)[names(batched) == "top_cm"] <- "Top offset"
+        batched <- batched[,c(1:6, 20, 19)]
+        names(batched)[names(batched) == "top_cm"] <- "Top offset cm"
         names(batched)[names(batched) == "requested_mbsf"] <- "Requested mbsf"
         batched <- batched
 
